@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia de Auditoria de Meta Ads — @panilha</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --preto: #111111;
+    --bege: #F0EDE8;
+    --bege-esc: #E0DDD8;
+    --cinza: #888888;
+    --cinza-lt: #F5F5F5;
+    --branco: #FFFFFF;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bege);
+    color: var(--preto);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── TOPO ── */
+  header {
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--bege-esc);
+  }
+
+  .logo {
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    color: var(--preto);
+    text-decoration: none;
+  }
+
+  .badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    background: var(--preto);
+    color: var(--branco);
+    padding: 4px 10px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 80px 32px 64px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .hero-pre {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cinza);
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 7vw, 64px);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+
+  .hero h1 span {
+    font-weight: 300;
+    display: block;
+  }
+
+  .divider {
+    width: 48px;
+    height: 3px;
+    background: var(--preto);
+    margin: 32px 0;
+  }
+
+  .hero-desc {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.7;
+    color: #444;
+    max-width: 480px;
+    margin-bottom: 48px;
+  }
+
+  /* ── CTA ── */
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--preto);
+    color: var(--branco);
+    text-decoration: none;
+    padding: 18px 32px;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    transition: opacity 0.15s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .cta-btn:hover { opacity: 0.85; }
+
+  .cta-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+
+  .cta-nota {
+    font-size: 12px;
+    color: var(--cinza);
+    margin-top: 12px;
+    font-style: italic;
+  }
+
+  /* ── O QUE TEM ── */
+  .section {
+    padding: 64px 32px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cinza);
+    margin-bottom: 24px;
+  }
+
+  .items {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid var(--bege-esc);
+  }
+
+  .item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--bege-esc);
+  }
+
+  .item-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--cinza);
+    min-width: 24px;
+    padding-top: 2px;
+  }
+
+  .item-content strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .item-content p {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  /* ── CONTEXTO ── */
+  .contexto {
+    background: var(--preto);
+    color: var(--branco);
+    padding: 64px 32px;
+    margin: 0;
+  }
+
+  .contexto-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .contexto .section-label {
+    color: #666;
+  }
+
+  .contexto blockquote {
+    font-size: clamp(18px, 3vw, 24px);
+    font-weight: 300;
+    line-height: 1.6;
+    border-left: 3px solid var(--branco);
+    padding-left: 24px;
+    margin: 0;
+    color: #ddd;
+  }
+
+  .contexto blockquote strong {
+    color: var(--branco);
+    font-weight: 700;
+  }
+
+  /* ── RODAPÉ ── */
+  footer {
+    padding: 32px;
+    text-align: center;
+    border-top: 1px solid var(--bege-esc);
+  }
+
+  footer p {
+    font-size: 12px;
+    color: var(--cinza);
+  }
+
+  footer a {
+    color: var(--preto);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  /* ── ANIMAÇÕES ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-pre  { animation: fadeUp 0.5s ease both; }
+  .hero h1   { animation: fadeUp 0.5s 0.1s ease both; }
+  .divider   { animation: fadeUp 0.5s 0.2s ease both; }
+  .hero-desc { animation: fadeUp 0.5s 0.3s ease both; }
+  .cta-btn   { animation: fadeUp 0.5s 0.4s ease both; }
+  .cta-nota  { animation: fadeUp 0.5s 0.5s ease both; }
+
+  @media (max-width: 480px) {
+    header { padding: 16px 20px; }
+    .hero, .section { padding-left: 20px; padding-right: 20px; }
+    .contexto { padding-left: 20px; padding-right: 20px; }
+    footer { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="#">@panilha</a>
+  <span class="badge">GRATUITO</span>
+</header>
+
+<section class="hero">
+  <p class="hero-pre">Guia Prático — Meta Ads + Claude Code</p>
+  <h1>
+    <span>Guia de</span>
+    Auditoria<br>de Meta Ads.
+  </h1>
+  <div class="divider"></div>
+  <p class="hero-desc">
+    Como exportar o CSV do Meta Ads Manager, criar um skill no Claude Code
+    e encontrar onde o seu ROI está sangrando em menos de 2 minutos.
+  </p>
+
+  <a class="cta-btn" href="guia_auditoria_meta_ads.pdf" download="guia_auditoria_meta_ads_panilha.pdf">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 4h14v-2H5v2z"/>
+    </svg>
+    Baixar o Guia Grátis
+  </a>
+  <p class="cta-nota">PDF gratuito. Sem cadastro.</p>
+</section>
+
+<div class="contexto">
+  <div class="contexto-inner">
+    <p class="section-label">Por que esse guia existe</p>
+    <blockquote>
+      Os últimos 15 dias de março foram um caos no Meta.
+      <strong>Leads caindo. CPM subindo. Campanhas travando.</strong>
+      Quem dependia só do painel ficou parado.
+      Esse guia mostra como sair da frente do painel
+      e ir direto para o dado.
+    </blockquote>
+  </div>
+</div>
+
+<section class="section">
+  <p class="section-label">O que está no guia</p>
+  <div class="items">
+    <div class="item">
+      <span class="item-num">01</span>
+      <div class="item-content">
+        <strong>Setup do Claude Code no VS Code</strong>
+        <p>Instalação completa do zero. Se já tiver instalado, pula direto para a próxima seção.</p>
+      </div>
+    </div>
+    <div class="item">
+      <span class="item-num">02</span>
+      <div class="item-content">
+        <strong>Como exportar o CSV do Meta Ads</strong>
+        <p>Passo a passo do export com as métricas certas: CAC por conjunto, CPM, CTR, frequência e alcance.</p>
+      </div>
+    </div>
+    <div class="item">
+      <span class="item-num">03</span>
+      <div class="item-content">
+        <strong>Criando o skill /meta-audit</strong>
+        <p>O arquivo SKILL.md completo — pronto para copiar e colar. Você cria uma vez e usa para sempre.</p>
+      </div>
+    </div>
+    <div class="item">
+      <span class="item-num">04</span>
+      <div class="item-content">
+        <strong>Rodando a primeira auditoria</strong>
+        <p>Exemplo real de diagnóstico por conjunto: o que escalar, pausar ou investigar — em segundos.</p>
+      </div>
+    </div>
+    <div class="item">
+      <span class="item-num">05</span>
+      <div class="item-content">
+        <strong>Erros comuns e como resolver</strong>
+        <p>Os problemas mais frequentes no setup e as soluções diretas.</p>
+      </div>
+    </div>
+    <div class="item">
+      <span class="item-num">06</span>
+      <div class="item-content">
+        <strong>Checklist antes de apresentar para o cliente</strong>
+        <p>8 pontos para garantir que o diagnóstico está baseado em dado real, não em achismo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 0;">
+  <a class="cta-btn" href="guia_auditoria_meta_ads.pdf" download="guia_auditoria_meta_ads_panilha.pdf">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 4h14v-2H5v2z"/>
+    </svg>
+    Baixar o Guia Grátis
+  </a>
+  <p class="cta-nota">PDF gratuito. Sem cadastro.</p>
+</section>
+
+<footer>
+  <p>Criado por <a href="https://instagram.com/panilha" target="_blank">@panilha</a> — Estrategista de Marketing + Claude Code — Manaus, AM</p>
+</footer>
+
+</body>
+</html>
